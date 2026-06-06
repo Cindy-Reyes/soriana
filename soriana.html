@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Soriana – Portal de Proveedores</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #f4f4f4;
+      color: #333;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: linear-gradient(135deg, #E31837 0%, #FF6B00 100%);
+      padding: 0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+    }
+
+    .header-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 40px;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .logo-circle {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      font-weight: 900;
+      color: #E31837;
+      letter-spacing: -1px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      flex-shrink: 0;
+    }
+
+    .logo-text {
+      color: #fff;
+    }
+
+    .logo-text h1 {
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .logo-text p {
+      font-size: 11px;
+      opacity: 0.88;
+      letter-spacing: 0.5px;
+      margin-top: 2px;
+    }
+
+    .header-user {
+      color: #fff;
+      text-align: right;
+      font-size: 13px;
+      opacity: 0.9;
+    }
+
+    .header-user strong {
+      display: block;
+      font-size: 14px;
+      opacity: 1;
+    }
+
+    /* ── NAV BAR ── */
+    nav {
+      background: rgba(0,0,0,0.18);
+      padding: 0 40px;
+      display: flex;
+      gap: 0;
+    }
+
+    nav a {
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      padding: 10px 18px;
+      font-size: 13px;
+      font-weight: 500;
+      border-bottom: 3px solid transparent;
+      transition: all 0.2s;
+    }
+
+    nav a:hover,
+    nav a.active {
+      color: #fff;
+      border-bottom-color: #fff;
+      background: rgba(255,255,255,0.08);
+    }
+
+    /* ── MAIN CONTENT ── */
+    main {
+      max-width: 960px;
+      margin: 36px auto;
+      padding: 0 20px 60px;
+    }
+
+    .breadcrumb {
+      font-size: 12px;
+      color: #888;
+      margin-bottom: 20px;
+    }
+
+    .breadcrumb span { color: #E31837; font-weight: 600; }
+
+    /* search bar */
+    .search-bar {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 20px 24px;
+      display: flex;
+      align-items: flex-end;
+      gap: 16px;
+      margin-bottom: 28px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+    }
+
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      flex: 1;
+    }
+
+    .field-group label {
+      font-size: 11px;
+      font-weight: 700;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .field-group input {
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 8px 12px;
+      font-size: 14px;
+      color: #333;
+      background: #fafafa;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .field-group input:focus { border-color: #FF6B00; }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #E31837, #FF6B00);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 9px 24px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      letter-spacing: 0.3px;
+      box-shadow: 0 2px 6px rgba(227,24,55,0.35);
+      transition: opacity 0.2s, transform 0.1s;
+    }
+
+    .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+    .btn-primary:active { transform: translateY(0); }
+
+    .result-label {
+      font-size: 13px;
+      color: #555;
+      margin-bottom: 14px;
+    }
+
+    .result-label strong { color: #E31837; }
+
+    /* ── ORDER CARD ── */
+    .order-card {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.09);
+      overflow: hidden;
+      border: 1px solid #e8e8e8;
+    }
+
+    .order-card-header {
+      background: linear-gradient(135deg, #E31837, #FF6B00);
+      color: #fff;
+      padding: 18px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .po-number {
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: 1px;
+    }
+
+    .status-badge {
+      background: rgba(255,255,255,0.22);
+      border: 1px solid rgba(255,255,255,0.55);
+      color: #fff;
+      border-radius: 20px;
+      padding: 4px 14px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .order-body { padding: 28px; }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px 30px;
+      margin-bottom: 28px;
+    }
+
+    .detail-item label {
+      display: block;
+      font-size: 10px;
+      font-weight: 700;
+      color: #FF6B00;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 4px;
+    }
+
+    .detail-item .value {
+      font-size: 15px;
+      color: #222;
+      font-weight: 600;
+    }
+
+    .detail-item .value.large {
+      font-size: 20px;
+      color: #E31837;
+    }
+
+    .divider {
+      border: none;
+      border-top: 1px solid #f0f0f0;
+      margin: 0 0 24px;
+    }
+
+    .table-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #555;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    thead tr {
+      background: #f7f7f7;
+      border-bottom: 2px solid #eee;
+    }
+
+    thead th {
+      padding: 10px 14px;
+      text-align: left;
+      font-size: 11px;
+      font-weight: 700;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    tbody tr {
+      border-bottom: 1px solid #f2f2f2;
+      transition: background 0.15s;
+    }
+
+    tbody tr:hover { background: #fffaf7; }
+
+    tbody td { padding: 12px 14px; color: #333; }
+
+    .sku-name { font-weight: 600; color: #222; }
+
+    .total-row td {
+      background: #fff8f5;
+      font-weight: 700;
+      color: #E31837;
+      border-top: 2px solid #f0e0d8;
+    }
+
+    .notes-box {
+      margin-top: 24px;
+      background: #fffaf5;
+      border-left: 4px solid #FF6B00;
+      border-radius: 0 6px 6px 0;
+      padding: 14px 18px;
+    }
+
+    .notes-box .notes-label {
+      font-size: 10px;
+      font-weight: 700;
+      color: #FF6B00;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 4px;
+    }
+
+    .notes-box p { font-size: 14px; color: #444; }
+
+    footer {
+      background: #2b2b2b;
+      color: #999;
+      text-align: center;
+      font-size: 12px;
+      padding: 18px 20px;
+      margin-top: 40px;
+    }
+
+    footer span { color: #FF6B00; }
+
+    /* ── NOT FOUND STATE ── */
+    .not-found {
+      display: none;
+      background: #fff;
+      border-radius: 10px;
+      border: 1px solid #f0c0c0;
+      padding: 40px 28px;
+      text-align: center;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+
+    .not-found .nf-icon { font-size: 40px; margin-bottom: 12px; }
+    .not-found h3 { color: #E31837; font-size: 17px; margin-bottom: 8px; }
+    .not-found p  { color: #777; font-size: 13px; }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════ HEADER ════════════════ -->
+<header>
+  <div class="header-top">
+    <div class="logo-area">
+      <img src="logo.svg" alt="Soriana" style="height:52px;width:auto;filter:brightness(0) invert(1);" />
+      <div class="logo-text">
+        <p>Portal de Proveedores &amp; Órdenes de Compra</p>
+      </div>
+    </div>
+    <div class="header-user">
+      <strong>Arca Continental S.A.B. de C.V.</strong>
+      Proveedor #7842 &nbsp;|&nbsp; Sesión activa
+    </div>
+  </div>
+  <nav>
+    <a href="#">Inicio</a>
+    <a href="#" class="active">Órdenes de Compra</a>
+    <a href="#">Facturas</a>
+    <a href="#">Entrega de Mercancía</a>
+    <a href="#">Catálogo SKU</a>
+    <a href="#">Soporte</a>
+  </nav>
+</header>
+
+<!-- ════════════════ MAIN ════════════════ -->
+<main>
+
+  <div class="breadcrumb">
+    Inicio &rsaquo; Órdenes de Compra &rsaquo; <span>Consulta de Orden</span>
+  </div>
+
+  <!-- Search / Consulta bar -->
+  <div class="search-bar">
+    <div class="field-group">
+      <label>Número de Orden de Compra</label>
+      <input type="text" value="OC-SOR-2024-001" id="poInput" placeholder="Ej. OC-SOR-2024-001" />
+    </div>
+    <div class="field-group">
+      <label>Fecha de Solicitud</label>
+      <input type="text" value="01/06/2026" placeholder="DD/MM/AAAA" />
+    </div>
+    <button class="btn-primary" onclick="consultarOrden()">
+      &#128269;&nbsp; Consultar Orden
+    </button>
+  </div>
+
+  <!-- Result label (dinámico) -->
+  <p class="result-label" id="resultLabel">
+    Mostrando resultado para la orden <strong>OC-SOR-2024-001</strong>
+    &nbsp;&mdash;&nbsp; Estado: <strong style="color:#2a9d2a;">&#10003; Activa / Pendiente de entrega</strong>
+  </p>
+
+  <!-- ────── ORDEN 1: OC-SOR-2024-001 ────── -->
+  <div class="order-card" id="order-001">
+
+    <div class="order-card-header">
+      <div>
+        <div style="font-size:11px;opacity:.8;margin-bottom:4px;letter-spacing:.5px;">ORDEN DE COMPRA</div>
+        <div class="po-number">OC-SOR-2024-001</div>
+        <div style="font-size:13px;margin-top:4px;opacity:.85;">Cadena Comercial OHSA, S.A. de C.V.</div>
+      </div>
+      <div style="text-align:right;">
+        <div class="status-badge">&#10003; Activa</div>
+        <div style="font-size:11px;margin-top:8px;opacity:.8;">Fecha emisión: 01/06/2026</div>
+      </div>
+    </div>
+
+    <div class="order-body">
+      <div class="detail-grid">
+        <div class="detail-item">
+          <label>CustomerName</label>
+          <div class="value">Soriana Cumbres</div>
+        </div>
+        <div class="detail-item">
+          <label>PurchaseOrder</label>
+          <div class="value">OC-SOR-2024-001</div>
+        </div>
+        <div class="detail-item">
+          <label>DeliveryDate</label>
+          <div class="value">15/06/2026</div>
+        </div>
+        <div class="detail-item">
+          <label>SKUDescription</label>
+          <div class="value">Coca-Cola 600ml</div>
+        </div>
+        <div class="detail-item">
+          <label>UnitPrice</label>
+          <div class="value large">$14.50 MXN</div>
+        </div>
+        <div class="detail-item">
+          <label>RequestedQty</label>
+          <div class="value large">200 piezas</div>
+        </div>
+      </div>
+
+      <hr class="divider" />
+
+      <div class="table-title">Detalle de Artículos</div>
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>SKU / Código</th>
+            <th>Descripción</th>
+            <th>Cant. Solicitada</th>
+            <th>Precio Unitario</th>
+            <th>Importe Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>CCL-600-NR</td>
+            <td class="sku-name">Coca-Cola 600ml (Sin retornable)</td>
+            <td>200 pzs</td>
+            <td>$14.50 MXN</td>
+            <td><strong>$2,900.00 MXN</strong></td>
+          </tr>
+          <tr class="total-row">
+            <td colspan="5" style="text-align:right;font-size:13px;">TOTAL ORDEN (MXN):</td>
+            <td style="font-size:17px;">$2,900.00</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="notes-box">
+        <div class="notes-label">OrderDetail</div>
+        <p>Entrega en CEDIS Monterrey Norte</p>
+      </div>
+    </div>
+  </div><!-- /order-001 -->
+
+  <!-- ────── ORDEN 2: OC-SOR-2024-002 ────── -->
+  <div class="order-card" id="order-002" style="display:none;">
+
+    <div class="order-card-header">
+      <div>
+        <div style="font-size:11px;opacity:.8;margin-bottom:4px;letter-spacing:.5px;">ORDEN DE COMPRA</div>
+        <div class="po-number">OC-SOR-2024-002</div>
+        <div style="font-size:13px;margin-top:4px;opacity:.85;">Cadena Comercial OHSA, S.A. de C.V.</div>
+      </div>
+      <div style="text-align:right;">
+        <div class="status-badge">&#10003; Activa</div>
+        <div style="font-size:11px;margin-top:8px;opacity:.8;">Fecha emisión: 05/06/2026</div>
+      </div>
+    </div>
+
+    <div class="order-body">
+      <div class="detail-grid">
+        <div class="detail-item">
+          <label>CustomerName</label>
+          <div class="value">Soriana Satélite</div>
+        </div>
+        <div class="detail-item">
+          <label>PurchaseOrder</label>
+          <div class="value">OC-SOR-2024-002</div>
+        </div>
+        <div class="detail-item">
+          <label>DeliveryDate</label>
+          <div class="value">20/06/2026</div>
+        </div>
+        <div class="detail-item">
+          <label>SKUDescription</label>
+          <div class="value">Coca-Cola 355ml</div>
+        </div>
+        <div class="detail-item">
+          <label>UnitPrice</label>
+          <div class="value large">$11.00 MXN</div>
+        </div>
+        <div class="detail-item">
+          <label>RequestedQty</label>
+          <div class="value large">150 piezas</div>
+        </div>
+      </div>
+
+      <hr class="divider" />
+
+      <div class="table-title">Detalle de Artículos</div>
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>SKU / Código</th>
+            <th>Descripción</th>
+            <th>Cant. Solicitada</th>
+            <th>Precio Unitario</th>
+            <th>Importe Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>CCL-355-NR</td>
+            <td class="sku-name">Coca-Cola 355ml (Sin retornable)</td>
+            <td>150 pzs</td>
+            <td>$11.00 MXN</td>
+            <td><strong>$1,650.00 MXN</strong></td>
+          </tr>
+          <tr class="total-row">
+            <td colspan="5" style="text-align:right;font-size:13px;">TOTAL ORDEN (MXN):</td>
+            <td style="font-size:17px;">$1,650.00</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="notes-box">
+        <div class="notes-label">OrderDetail</div>
+        <p>Entrega en CEDIS Sur</p>
+      </div>
+    </div>
+  </div><!-- /order-002 -->
+
+  <!-- Estado: orden no encontrada -->
+  <div class="not-found" id="order-notfound">
+    <div class="nf-icon">&#128683;</div>
+    <h3>Orden no encontrada</h3>
+    <p>El número de orden ingresado no existe o no está asociado a tu cuenta de proveedor.<br>Verifica el número e intenta de nuevo.</p>
+  </div>
+
+</main>
+
+<script>
+  var orders = {
+    'OC-SOR-2024-001': {
+      elementId: 'order-001',
+      label: 'OC-SOR-2024-001'
+    },
+    'OC-SOR-2024-002': {
+      elementId: 'order-002',
+      label: 'OC-SOR-2024-002'
+    }
+  };
+
+  function consultarOrden() {
+    var input = document.getElementById('poInput').value.trim().toUpperCase();
+    var resultLabel = document.getElementById('resultLabel');
+
+    // Ocultar todas las tarjetas y el estado "no encontrado"
+    document.getElementById('order-001').style.display    = 'none';
+    document.getElementById('order-002').style.display    = 'none';
+    document.getElementById('order-notfound').style.display = 'none';
+
+    var found = orders[input];
+
+    if (found) {
+      var card = document.getElementById(found.elementId);
+      card.style.display = 'block';
+      resultLabel.style.display = 'block';
+      resultLabel.innerHTML =
+        'Mostrando resultado para la orden <strong>' + found.label + '</strong>' +
+        '&nbsp;&mdash;&nbsp; Estado: <strong style="color:#2a9d2a;">&#10003; Activa / Pendiente de entrega</strong>';
+      card.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      resultLabel.style.display = 'none';
+      var nf = document.getElementById('order-notfound');
+      nf.style.display = 'block';
+      nf.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
+  // Permite consultar con la tecla Enter
+  document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById('poInput').addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') consultarOrden();
+    });
+  });
+</script>
+
+<!-- ════════════════ FOOTER ════════════════ -->
+<footer>
+  &copy; 2026 <span>Soriana</span> &ndash; Cadena Comercial OHSA, S.A. de C.V. &nbsp;|&nbsp;
+  Portal de Proveedores v3.4 &nbsp;|&nbsp; Todos los derechos reservados.
+</footer>
+
+</body>
+</html>
