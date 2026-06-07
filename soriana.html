@@ -567,6 +567,86 @@
     </div>
   </div><!-- /order-002 -->
 
+  <!-- ────── ORDEN 3: OC-SOR-2024-003 ────── -->
+  <div class="order-card" id="order-003" style="display:none;">
+
+    <div class="order-card-header">
+      <div>
+        <div style="font-size:11px;opacity:.8;margin-bottom:4px;letter-spacing:.5px;">ORDEN DE COMPRA</div>
+        <div class="po-number">OC-SOR-2024-003</div>
+        <div style="font-size:13px;margin-top:4px;opacity:.85;">Cadena Comercial OHSA, S.A. de C.V.</div>
+      </div>
+      <div style="text-align:right;">
+        <div class="status-badge">&#10003; Activa</div>
+        <div style="font-size:11px;margin-top:8px;opacity:.8;">Fecha emisión: 08/06/2026</div>
+      </div>
+    </div>
+
+    <div class="order-body">
+      <div class="detail-grid">
+        <div class="detail-item">
+          <label>CustomerName</label>
+          <div class="value">Soriana Perisur</div>
+        </div>
+        <div class="detail-item">
+          <label>PurchaseOrder</label>
+          <div class="value">OC-SOR-2024-003</div>
+        </div>
+        <div class="detail-item">
+          <label>DeliveryDate</label>
+          <div class="value">25/06/2026</div>
+        </div>
+        <div class="detail-item">
+          <label>SKUDescription</label>
+          <div class="value">Agua Ciel 1L</div>
+        </div>
+        <div class="detail-item">
+          <label>UnitPrice</label>
+          <div class="value large">$8.50 MXN</div>
+        </div>
+        <div class="detail-item">
+          <label>RequestedQty</label>
+          <div class="value large">300 piezas</div>
+        </div>
+      </div>
+
+      <hr class="divider" />
+
+      <div class="table-title">Detalle de Artículos</div>
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>SKU / Código</th>
+            <th>Descripción</th>
+            <th>Cant. Solicitada</th>
+            <th>Precio Unitario</th>
+            <th>Importe Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>ACL-1L-NR</td>
+            <td class="sku-name">Agua Ciel 1 litro (Sin retornable)</td>
+            <td>300 pzs</td>
+            <td>$8.50 MXN</td>
+            <td><strong>$2,550.00 MXN</strong></td>
+          </tr>
+          <tr class="total-row">
+            <td colspan="5" style="text-align:right;font-size:13px;">TOTAL ORDEN (MXN):</td>
+            <td style="font-size:17px;">$2,550.00</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="notes-box">
+        <div class="notes-label">OrderDetail</div>
+        <p>Entrega en CEDIS Sur Poniente</p>
+      </div>
+    </div>
+  </div><!-- /order-003 -->
+
   <!-- Estado: orden no encontrada -->
   <div class="not-found" id="order-notfound">
     <div class="nf-icon">&#128683;</div>
@@ -585,6 +665,10 @@
     'OC-SOR-2024-002': {
       elementId: 'order-002',
       label: 'OC-SOR-2024-002'
+    },
+    'OC-SOR-2024-003': {
+      elementId: 'order-003',
+      label: 'OC-SOR-2024-003'
     }
   };
 
@@ -593,8 +677,9 @@
     var resultLabel = document.getElementById('resultLabel');
 
     // Ocultar todas las tarjetas y el estado "no encontrado"
-    document.getElementById('order-001').style.display    = 'none';
-    document.getElementById('order-002').style.display    = 'none';
+    document.getElementById('order-001').style.display      = 'none';
+    document.getElementById('order-002').style.display      = 'none';
+    document.getElementById('order-003').style.display      = 'none';
     document.getElementById('order-notfound').style.display = 'none';
 
     var found = orders[input];
